@@ -1,10 +1,11 @@
-package com.springboot.miscroserice.course.modal;
+package com.springboot.modal;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "course")
@@ -19,11 +20,13 @@ public class CourseEntity {
     private String name;
     private String trainerName;
     private String duration;
-    private String startDate;
+    private Date startDate;
     private String courseType;
     private double fees;
     private boolean isCertificateAvailable;
     private String description;
+    private String email;
+    private String contact;
 
 
 }

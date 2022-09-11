@@ -1,10 +1,11 @@
-package com.springboot.miscroserice.course.services;
+package com.springboot.services;
 
-import com.springboot.miscroserice.course.dto.CourseRequestDTO;
-import com.springboot.miscroserice.course.dto.CourseResponseDTO;
-import com.springboot.miscroserice.course.modal.CourseEntity;
-import com.springboot.miscroserice.course.repository.CourseRepository;
-import com.springboot.miscroserice.course.util.AppUtil;
+import com.springboot.dto.CourseRequestDTO;
+import com.springboot.dto.CourseResponseDTO;
+import com.springboot.exception.CourseServiceBusinessException;
+import com.springboot.modal.CourseEntity;
+import com.springboot.repository.CourseRepository;
+import com.springboot.util.AppUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,10 +22,17 @@ public class CourseService {
     private CourseRepository courseRepository;
     public CourseResponseDTO save(CourseRequestDTO courseRequestDTO) {
 
-        CourseEntity courseEntity = AppUtil.convertRequestToEntity(courseRequestDTO);
-        CourseEntity entity = courseRepository.save(courseEntity);
-        CourseResponseDTO responseDTO = AppUtil.convertEntityToResponse(entity);
-        return responseDTO;
+        try{
+            CourseEntity courseEntity = AppUtil.convertRequestToEntity(courseRequestDTO);
+            courseRequestDTO.isCertificateAvailable();
+            CourseEntity entity = courseRepository.save(courseEntity);
+            CourseResponseDTO responseDTO = AppUtil.convertEntityToResponse(entity);
+            return responseDTO;
+        }catch (Exception e){
+           throw new CourseServiceBusinessException("Course saving exception in service");
+
+        }
+
     }
 
     public List<CourseResponseDTO> viewAllCourse() {

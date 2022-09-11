@@ -1,16 +1,17 @@
-package com.springboot.miscroserice.course.controller;
+package com.springboot.controller;
 
-import com.springboot.miscroserice.course.dto.CourseRequestDTO;
-import com.springboot.miscroserice.course.dto.CourseResponseDTO;
-import com.springboot.miscroserice.course.dto.ServiceResponse;
-import com.springboot.miscroserice.course.modal.CourseEntity;
-import com.springboot.miscroserice.course.services.CourseService;
-import com.springboot.miscroserice.course.util.AppUtil;
+import com.springboot.dto.CourseRequestDTO;
+import com.springboot.dto.CourseResponseDTO;
+import com.springboot.dto.ServiceResponse;
+import com.springboot.modal.CourseEntity;
+import com.springboot.services.CourseService;
+import com.springboot.util.AppUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -20,10 +21,10 @@ public class CourseController {
     @Autowired
     private CourseService courseService;
     @PostMapping
-    public ResponseEntity<?>  addCourse(@RequestBody CourseRequestDTO courseRequestDTO) {
+    public ServiceResponse<?>  addCourse(@Valid @RequestBody CourseRequestDTO courseRequestDTO) {
 
         CourseResponseDTO courseResponseDTO = courseService.save(courseRequestDTO);
-        return new ResponseEntity<>(courseResponseDTO , HttpStatus.CREATED); // 201
+        return new ServiceResponse<>(HttpStatus.CREATED ,courseResponseDTO); // 201
 
     }
     @GetMapping

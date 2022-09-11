@@ -1,15 +1,14 @@
-package com.springboot.miscroserice.course.util;
+package com.springboot.util;
 
-import com.springboot.miscroserice.course.dto.CourseRequestDTO;
-import com.springboot.miscroserice.course.dto.CourseResponseDTO;
-import com.springboot.miscroserice.course.modal.CourseEntity;
+import com.springboot.dto.CourseRequestDTO;
+import com.springboot.dto.CourseResponseDTO;
+import com.springboot.modal.CourseEntity;
 
 import java.util.UUID;
 
 public class AppUtil {
     public static CourseEntity convertRequestToEntity(CourseRequestDTO courseRequestDTO) {
         CourseEntity courseEntity = new CourseEntity();
-//        courseEntity.setCourseId();
         courseEntity.setName(courseRequestDTO.getName());
         courseEntity.setTrainerName(courseRequestDTO.getTrainerName());
         courseEntity.setDuration(courseRequestDTO.getDuration());
@@ -18,8 +17,9 @@ public class AppUtil {
         courseEntity.setFees(courseRequestDTO.getFees());
         courseEntity.setCertificateAvailable(courseRequestDTO.isCertificateAvailable());
         courseEntity.setDescription(courseRequestDTO.getDescription());
+        courseEntity.setEmail(courseRequestDTO.getEmail());
+        courseEntity.setContact(courseRequestDTO.getContact());
         return courseEntity;
-
     }
 
     public static CourseResponseDTO convertEntityToResponse(CourseEntity entity) {
@@ -33,8 +33,9 @@ public class AppUtil {
         courseResponseDTO.setFees(entity.getFees());
         courseResponseDTO.setCertificateAvailable(entity.isCertificateAvailable());
         courseResponseDTO.setDescription(entity.getDescription());
+        courseResponseDTO.setEmail(entity.getEmail());
+        courseResponseDTO.setContact(entity.getContact());
         courseResponseDTO.setCourseUniqueCode(UUID.randomUUID().toString().split("-")[0]);
-//        courseResponseDTO.setCourseUniqueCode();
         return courseResponseDTO;
 
     }
