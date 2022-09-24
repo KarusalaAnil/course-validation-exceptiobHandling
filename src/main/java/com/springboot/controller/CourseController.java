@@ -50,25 +50,29 @@ public class CourseController {
 
     }
     @GetMapping
-    public ResponseEntity<?> findAllCourse(){
+    public ServiceResponse<?> findAllCourse(){
         List<CourseResponseDTO> courseResponseDTOList= courseService.viewAllCourse();
-        return new ResponseEntity<>(courseResponseDTOList , HttpStatus.OK);
+        return new ServiceResponse<>(HttpStatus.OK ,courseResponseDTOList );
     }
-    @GetMapping("/find/{courseId}")
+    @GetMapping("/find/path/{courseId}")
     public ServiceResponse<CourseResponseDTO> findCourse(@PathVariable("courseId") int courseId){
+        return new ServiceResponse<> ( HttpStatus.OK,courseService.getCourseDetails(courseId));
+    }
+    @GetMapping("/find/request")
+    public ServiceResponse<CourseResponseDTO> findCourseById(@RequestParam("courseId") int courseId){
         return new ServiceResponse<> ( HttpStatus.OK,courseService.getCourseDetails(courseId));
     }
 
     @PutMapping("/update/{courseId}")
-    public ResponseEntity<?> updateCourse(@RequestBody CourseRequestDTO requestDTO ,
+    public ServiceResponse<?> updateCourse(@RequestBody CourseRequestDTO requestDTO ,
                                           @PathVariable int courseId) {
-        return new ResponseEntity<>(courseService.updateCourseDetails(requestDTO , courseId) , HttpStatus.OK);
+        return new ServiceResponse<>( HttpStatus.OK ,courseService.updateCourseDetails(requestDTO , courseId) );
     }
 
     @DeleteMapping("{courseId}")
-    public ResponseEntity<?> deleteCourse(@PathVariable int courseId) {
+    public ServiceResponse<?> deleteCourse(@PathVariable int courseId) {
         courseService.removeCourse(courseId);
-        return new ResponseEntity<>("Course Deleted successfully "+courseId,HttpStatus.OK);
+        return new ServiceResponse<>(HttpStatus.OK ,"Course Deleted successfully "+courseId);
     }
 
     public void getLoggerDetails() {
